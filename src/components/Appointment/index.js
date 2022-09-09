@@ -1,5 +1,13 @@
 import React from "react";
 import "components/Appointment/styles.scss"
-export default function Appointment () {
-  return (<article className="appointment"></article>)
+import Empty from "./Empty";
+import Show from "./Show";
+import Header from "./Header";
+export default function Appointment (props) {
+  return (<article className="appointment">
+    <>
+    <Header time={props.time}/>
+    {props.interview ? <Show student={props.interview.student} interviewer={props.interview.interviewer}/> : <Empty />}
+    </>
+  </article>)
 }
