@@ -42,10 +42,7 @@ export default function Form(props) {
             value={student}
             onChange={(e) => { setStudent(e.target.value) }}
             data-testid="student-name-input"
-          /*
-            This must be a controlled component
-            your code goes here
-          */
+         
           />
         </form>
         <section className="appointment__validation">{error}</section>
@@ -53,7 +50,7 @@ export default function Form(props) {
           interviewers={props.interviewers}
           value={interviewer}
           onChange={setInterviewer}
-        /* your code goes here */
+      
         />
       </section>
       <section className="appointment__card-right">

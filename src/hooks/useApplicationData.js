@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react"
+import { useState, useEffect } from "react"
 import axios from "axios";
 export default function useApplicationData() {
   const [state, setState] = useState({
@@ -10,7 +10,7 @@ export default function useApplicationData() {
 
 
   function bookInterview(id, interview) {
-    
+
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
@@ -20,16 +20,16 @@ export default function useApplicationData() {
       [id]: appointment
     };
     const dayObj = state.days.find(d => d.name === state.day)
-    let spots =  dayObj.appointments.length;
-    for (const id of dayObj.appointments){
+    let spots = dayObj.appointments.length;
+    for (const id of dayObj.appointments) {
       const appointment = appointments[id]
-    if(appointment.interview){
-      spots--
+      if (appointment.interview) {
+        spots--
+      }
     }
-    }
-    const day = {...dayObj, spots};
-    const days = state.days.map( d => d.name === state.day ? day : d)
-    
+    const day = { ...dayObj, spots };
+    const days = state.days.map(d => d.name === state.day ? day : d)
+
 
     const savingURL = `/api/appointments/${id}`
     return axios.put(savingURL, { interview })
@@ -38,9 +38,9 @@ export default function useApplicationData() {
           ...state,
           appointments, days
         })
-     
+
       )
-    
+
 
 
 
@@ -57,53 +57,41 @@ export default function useApplicationData() {
 
     let spots = 0
     const dayObj = state.days.find(d => d.name === state.day)
-    for (const id of dayObj.appointments){
+    for (const id of dayObj.appointments) {
       const appointment = appointments[id]
-    if(!appointment.interview){
-      spots++
+      if (!appointment.interview) {
+        spots++
+      }
     }
-    }
-    const day = {...dayObj, spots};
-    const days = state.days.map( d => d.name === state.day ? day : d)
-     
+    const day = { ...dayObj, spots };
+    const days = state.days.map(d => d.name === state.day ? day : d)
+
     const deleteURL = `/api/appointments/${id}`
     return axios.delete(deleteURL, { interview })
-    .then((response) => 
-    setState({
-      ...state, appointments, days
-    }))
+      .then((response) =>
+        setState({
+          ...state, appointments, days
+        }))
 
- }
+  }
 
- const setDay = day => setState(prev => ({ ...prev, day }));
+  const setDay = day => setState(prev => ({ ...prev, day }));
 
- useEffect(() => {
-  const daysURL = `/api/days`;
-  const appointmentsURL = `/api/appointments`;
-  const interviewersURL = `/api/interviewers`;
-  Promise.all([
-    axios.get(daysURL),
-    axios.get(appointmentsURL),
-    axios.get(interviewersURL)
-  ]).then((all) => {
-    setState(prev => ({ ...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data }));
-  })
-}, [])
+  useEffect(() => {
+    const daysURL = `/api/days`;
+    const appointmentsURL = `/api/appointments`;
+    const interviewersURL = `/api/interviewers`;
+    Promise.all([
+      axios.get(daysURL),
+      axios.get(appointmentsURL),
+      axios.get(interviewersURL)
+    ]).then((all) => {
+      setState(prev => ({ ...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data }));
+    })
+  }, [])
 
-/*function updateSpots(state, appointments){
-let spots = 0
-const dayObj = state.days.find(d => d.name === state.day)
-for (const id of dayObj.appointments){
-  const appointment = appointments[id]
-if(!appointment.interview){
-  spots++
-}
-}
-const day = {... dayObj, spots};
-const days = state.days.map( d => d.name === state.day ? day : d)
-return days 
-}*/
-console.log("STATE", state)
 
- return {state , setDay, bookInterview, cancelInterview}
+  console.log("STATE", state)
+
+  return { state, setDay, bookInterview, cancelInterview }
 }
