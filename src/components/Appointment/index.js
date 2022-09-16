@@ -7,6 +7,7 @@ import Form from "./Form";
 import Status from "./Status";
 import useVisualMode from "hooks/useVisualMode";
 import Confirm from "./Confirm";
+import useApplicationData from "hooks/useApplicationData";
 
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
@@ -44,7 +45,7 @@ export default function Appointment(props) {
   }
 
   return (
-    <article className="appointment">
+    <article className="appointment" data-testid="appointment">
 
       <Header time={props.time} />
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
@@ -80,7 +81,7 @@ export default function Appointment(props) {
       )}
       {mode === CONFIRM && (
       <Confirm 
-        message="Are you sure you want to delete?" 
+        message="Are you sure you would like to delete?" 
         onCancel={back} 
         onConfirm={destroy} 
       />

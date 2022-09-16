@@ -10,7 +10,7 @@ export default function useApplicationData() {
 
 
   function bookInterview(id, interview) {
-
+    
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
@@ -19,19 +19,19 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment
     };
-    let spots = 5
     const dayObj = state.days.find(d => d.name === state.day)
+    let spots =  dayObj.appointments.length;
     for (const id of dayObj.appointments){
       const appointment = appointments[id]
-    if(!appointment.interview){
-      spots=-1;
+    if(appointment.interview){
+      spots--
     }
     }
     const day = {...dayObj, spots};
     const days = state.days.map( d => d.name === state.day ? day : d)
     
 
-    const savingURL = `http://localhost:8001/api/appointments/${id}`
+    const savingURL = `/api/appointments/${id}`
     return axios.put(savingURL, { interview })
       .then((response) =>
         setState({
@@ -66,7 +66,7 @@ export default function useApplicationData() {
     const day = {...dayObj, spots};
     const days = state.days.map( d => d.name === state.day ? day : d)
      
-    const deleteURL = `http://localhost:8001/api/appointments/${id}`
+    const deleteURL = `/api/appointments/${id}`
     return axios.delete(deleteURL, { interview })
     .then((response) => 
     setState({
@@ -78,9 +78,9 @@ export default function useApplicationData() {
  const setDay = day => setState(prev => ({ ...prev, day }));
 
  useEffect(() => {
-  const daysURL = `http://localhost:8001/api/days`;
-  const appointmentsURL = `http://localhost:8001/api/appointments`;
-  const interviewersURL = `http://localhost:8001/api/interviewers`;
+  const daysURL = `/api/days`;
+  const appointmentsURL = `/api/appointments`;
+  const interviewersURL = `/api/interviewers`;
   Promise.all([
     axios.get(daysURL),
     axios.get(appointmentsURL),
