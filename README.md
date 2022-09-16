@@ -21,3 +21,9 @@ npm test
 ```sh
 npm run storybook
 ```
+
+## Screenshots
+
+!["The application page with list of days and appointments"](https://github.com/netsiemmanuel/scheduler/blob/master/docs/application.png?raw=true)
+
+!["The appointment form"](https://github.com/netsiemmanuel/scheduler/blob/master/docs/application-form.png?raw=true)
