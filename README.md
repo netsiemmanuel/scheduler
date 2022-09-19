@@ -1,5 +1,7 @@
 # Interview Scheduler
 
+Interview Scheduler is a web app where users can create, edit and delete interview appointments.
+
 ## Setup
 
 Install dependencies with `npm install`.
